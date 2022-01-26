@@ -2,7 +2,7 @@
 #include <cs50.h>
 
 int main(void) {
-    int x = get_int("x: ");
-    int y = get_int("y: ");
-    printf("%i", x + y);
+    long int x = get_long("x: ");
+    long int y = get_long("y: ");
+    printf("%li", x + y);
 }
