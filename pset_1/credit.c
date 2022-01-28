@@ -9,17 +9,14 @@ bool checksum(long int number, int length){
     int sum_products = 0;
     int sum_remaining = 0;
     int nth_digit;
+    int nth_digit_by_2;
 
     for (int i = length - 1; i >= 0; i--){
         nth_digit = number / pow(10, i);
         // check if even
         if (i % 2 == 1){
-            if (nth_digit >= 5){
-                sum_products += 1 + (nth_digit * 2 - 10);
-            }
-            else{
-                sum_products += nth_digit * 2;
-            }
+            nth_digit_by_2 = nth_digit * 2;
+            sum_products += nth_digit_by_2 / 10 + nth_digit_by_2 % 10;
         }
         else{
             sum_remaining += nth_digit;
