@@ -2,12 +2,23 @@
 #include <math.h>
 #include <stdio.h>
 
-// const long int MIN_VALID_VISA = pow(10, 13);
-// const long int MAX_VALID_VISA = pow(10, 16);
-// const long int MAX_VALID_MASTERCARD = pow(10, 16);
-// const long int MAX_VALID_MASTERCARD = pow(10, 16);
-// const long int MAX_VALID_AEXPRESS = 34 * pow(10, 15);
-// const long int MAX_VALID_AEXPRESS = 37 * pow(10, 15);
+
+bool checksum(long int number, int length){
+    // Luhn’s algorithm
+    int sum_multipl_by_2 = 0;
+    int sum_products_digits = 0;
+    int sum_not_multipl_by_2 = 0;
+    int nth_digit;
+
+    for (int i = length - 1; i >= 0; i--){
+        nth_digit = number / pow(10, i);
+        // ops
+        
+        number -= nth_digit * pow(10, i);
+        printf("%i, %li, %i\n", nth_digit, number, i);
+    }
+
+}
 
 bool valid_mastercard(long int number){
     int first_two_digits = number / pow(10, 14);
@@ -19,9 +30,10 @@ bool valid_american_express(long int number){
     return (first_two_digits == 34 || first_two_digits == 37);
 }
 
+
 bool valid_visa(long int number){
     int first_digit;
-    if (number >= pow(10, 15)){
+    if (number >= pow(10, 15) && checksum(number, 16)){
         first_digit = number / pow(10, 15);
     }
     else if (number >= pow(10, 12)){
@@ -32,6 +44,7 @@ bool valid_visa(long int number){
     }
     return (first_digit == 4);
 }
+
 
 
 int main(void)
