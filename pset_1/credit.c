@@ -11,10 +11,12 @@
 
 bool valid_mastercard(long int number){
     int first_two_digits = number / pow(10, 14);
-    if (first_two_digits >= 51 && first_two_digits <= 55){
-        return true;
-    }
-    return false;
+    return (first_two_digits >= 51 && first_two_digits <= 55);
+}
+
+bool valid_american_express(long int number){
+    int first_two_digits = number / pow(10, 13);
+    return (first_two_digits == 34 || first_two_digits == 37);
 }
 
 bool valid_visa(long int number){
@@ -28,10 +30,7 @@ bool valid_visa(long int number){
     else {
         return false;
     }
-    if (first_digit == 4){
-        return true;
-    }
-    return false;
+    return (first_digit == 4);
 }
 
 
@@ -40,6 +39,9 @@ int main(void)
     long int number = get_long("Number: ");
     if (valid_mastercard(number)){
         printf("MASTERCARD\n");
+    }
+    else if (valid_american_express(number)){
+        printf("AMEX\n");
     }
     else if (valid_visa(number)){
         printf("VISA\n");
