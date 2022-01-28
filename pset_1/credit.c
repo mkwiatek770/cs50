@@ -3,21 +3,30 @@
 #include <stdio.h>
 
 
+
 bool checksum(long int number, int length){
     // Luhn’s algorithm
-    int sum_multipl_by_2 = 0;
-    int sum_products_digits = 0;
-    int sum_not_multipl_by_2 = 0;
+    int sum_products = 0;
+    int sum_remaining = 0;
     int nth_digit;
 
     for (int i = length - 1; i >= 0; i--){
         nth_digit = number / pow(10, i);
-        // ops
-        
+        // check if even
+        if (i % 2 == 1){
+            if (nth_digit >= 5){
+                sum_products += 1 + (nth_digit * 2 - 10);
+            }
+            else{
+                sum_products += nth_digit * 2;
+            }
+        }
+        else{
+            sum_remaining += nth_digit;
+        }
         number -= nth_digit * pow(10, i);
-        printf("%i, %li, %i\n", nth_digit, number, i);
     }
-
+    return (sum_remaining + sum_products) % 10 == 0;
 }
 
 bool valid_mastercard(long int number){
@@ -33,16 +42,19 @@ bool valid_american_express(long int number){
 
 bool valid_visa(long int number){
     int first_digit;
-    if (number >= pow(10, 15) && checksum(number, 16)){
-        first_digit = number / pow(10, 15);
+    int length;
+    if (number >= pow(10, 15)){
+        length = 16;
+        first_digit = number / pow(10, length - 1);
     }
     else if (number >= pow(10, 12)){
-        first_digit = number / pow(10, 12);
+        length = 13;
+        first_digit = number / pow(10, length - 1);
     }
     else {
         return false;
     }
-    return (first_digit == 4);
+    return first_digit == 4 && checksum(number, length);
 }
 
 
