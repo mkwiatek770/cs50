@@ -1,0 +1,13 @@
+a.out = asermbler output
+clang -l<library>   l=link
+
+Kompilacja co robi gcc lub clang?
+1. preprocessing
+- includes prototypes of used external functions from headers
+- zamienia #include <stdio.h> na int printf(format, ...);
+2. compiling
+- zamienia kod zrodlowy c na assembly language
+3. assembling
+- zamiana kodu assembly lang na 0 i 1 (kod maszynowy)
+4. linking
+- łaczy kod maszynowy naszego programu i bibliotek, ktore inkludujemy
