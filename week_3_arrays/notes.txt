@@ -1,4 +1,5 @@
 a.out = asermbler output
+
 clang -l<library>   l=link
 
 Kompilacja co robi gcc lub clang?
@@ -11,3 +12,15 @@ Kompilacja co robi gcc lub clang?
 - zamiana kodu assembly lang na 0 i 1 (kod maszynowy)
 4. linking
 - łaczy kod maszynowy naszego programu i bibliotek, ktore inkludujemy
+
+debug50 - profram ktory upraszcza konfiguracje debugera w vscode
+
+NUL character \0 - 8 bitów o wartosci 0
+
+CS50 manual: https://manual.cs50.io/
+
+string.h i ctype.h
+
+w c false=0 a kazdy inny int = true
+
+exit status (return val. funkcji main)
