@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <cs50.h>
+#include <string.h>
+
 
 int main(void) {
     string name = get_string("String: ");
@@ -9,4 +11,5 @@ int main(void) {
         i++;
     }
     printf("%i\n", i);
+    int l = strlen(name); // better way
 }
