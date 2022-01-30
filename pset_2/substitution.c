@@ -28,16 +28,26 @@ int main(int argc, string *argv){
 }
 
 bool key_is_valid(string key){
-    // make sure key lenght is 26 chars long and contains only alphabetical letters
+    // make sure key lenght is 26 chars long
+    // contains only unique alphabetical letters
     if (strlen(key) != 26){
         printf("Key must contain 26 aphabetic characters!\n");
         return false;
     }
+    char visited[26];
     for (int i = 0; i < 26; i++){
         if (!isalpha(key[i])){
             printf("Chraracter on position %i is not alphabetical!\n", i + 1);
             return false;
         }
+        // check uniqueness
+        for (int j = 0; j < i; j++){
+            if (key[i] == visited[j]){
+                printf("Letter %c is duplicated!\n", key[i]);
+                return false;
+            }
+        }
+        visited[i] = key[i];
     }
     return true;
 }
