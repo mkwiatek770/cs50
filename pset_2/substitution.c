@@ -4,6 +4,9 @@
 #include <string.h>
 
 
+const int ASCII_A = 65;
+const int ASCII_a = 97;
+
 bool key_is_valid(string key){
     // make sure key lenght is 26 chars long and contains only alphabetical letters
     if (strlen(key) != 26){
@@ -19,6 +22,32 @@ bool key_is_valid(string key){
     return true;
 }
 
+
+string encode(string text, string key){
+    // substitution cipher
+    string encoded_text = text;
+    char c;
+    char new_c;
+    int position;
+    for (int i = 0, len = strlen(text); i < len; i++){
+        c = text[i];
+        if (isalpha(c)){
+            if (isupper(c)){
+                position = c - ASCII_A;
+                new_c = toupper(key[position]);
+            }
+            else{
+                position = c - ASCII_a;
+                new_c = tolower(key[position]);
+            }
+            // perform substitution
+            encoded_text[i] = new_c;
+        }
+    }
+    return encoded_text;
+}
+
+
 int main(int argc, string *argv){
 
     if (argc != 2){
@@ -33,7 +62,8 @@ int main(int argc, string *argv){
     // get plaintext
     string plaintext = get_string("plaintext:  ");
     // encode plaintext using key
+    string cipher = encode(plaintext, key);
     // print ciphertext
-    printf("ciphertext: %s\n", plaintext);
+    printf("ciphertext: %s\n", cipher);
     return 0;
 }
