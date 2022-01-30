@@ -4,8 +4,28 @@
 #include <string.h>
 
 
-const int ASCII_A = 65;
-const int ASCII_a = 97;
+const int ASCII_A = 65, ASCII_a = 97;
+// prototypes
+bool key_is_valid(string key);
+string encode(string text, string key);
+
+
+int main(int argc, string *argv){
+
+    if (argc != 2){
+        printf("One argument(key) required!\n");
+        return 1;
+    }
+    string key = argv[1];
+    if (!key_is_valid(key)){
+        return 1;
+    }
+    string plaintext = get_string("plaintext:  ");
+    string cipher = encode(plaintext, key);
+    printf("ciphertext: %s\n", cipher);
+
+    return 0;
+}
 
 bool key_is_valid(string key){
     // make sure key lenght is 26 chars long and contains only alphabetical letters
@@ -45,25 +65,4 @@ string encode(string text, string key){
         }
     }
     return encoded_text;
-}
-
-
-int main(int argc, string *argv){
-
-    if (argc != 2){
-        printf("One argument(key) required!\n");
-        return 1;
-    }
-    string key = argv[1];
-    if (!key_is_valid(key)){
-        return 1;
-    }
-    // convert string to lowercase
-    // get plaintext
-    string plaintext = get_string("plaintext:  ");
-    // encode plaintext using key
-    string cipher = encode(plaintext, key);
-    // print ciphertext
-    printf("ciphertext: %s\n", cipher);
-    return 0;
 }
