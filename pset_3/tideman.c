@@ -98,10 +98,16 @@ int main(int argc, string argv[])
                 return 3;
             }
         }
-        printf("[%i, %i, %i]\n", ranks[0], ranks[1], ranks[2]);
-
         record_preferences(ranks);
 
+        printf("\n");
+    }
+
+    // print matrix (temporary)
+    for(int i = 0; i < candidate_count; i++){
+        for(int j = 0; j < candidate_count; j++){
+            printf("%i ", preferences[i][j]);
+        }
         printf("\n");
     }
 
@@ -127,7 +133,14 @@ bool vote(int rank, string name, int ranks[])
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
+    int winner, looser;
+    for (int i = 0; i < candidate_count - 1; i++){
+        winner = ranks[i];
+        for (int j = i + 1; j < candidate_count; j++){
+            looser = ranks[j];
+            preferences[winner][looser]++; // maybe += 1 would be better ..
+        }
+    }
     return;
 }
 
