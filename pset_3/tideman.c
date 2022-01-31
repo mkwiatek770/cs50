@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 /*
 Put more formally, the Tideman voting method consists of three parts:
@@ -97,6 +98,7 @@ int main(int argc, string argv[])
                 return 3;
             }
         }
+        printf("[%i, %i, %i]\n", ranks[0], ranks[1], ranks[2]);
 
         record_preferences(ranks);
 
@@ -113,7 +115,12 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO
+    for(int i = 0; i < candidate_count; i++){
+        if (strcmp(candidates[i], name) == 0){
+            ranks[rank] = i;
+            return true;
+        }
+    }
     return false;
 }
 
