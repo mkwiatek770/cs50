@@ -1,0 +1,16 @@
+big O notation
+omega - lower bound, big O - upper
+big theta - big O = big omega
+
+binary search O(log(n))
+wiekszosc algorytmow divide&conquer maja complexity logarytmiczna
+
+strcmp zwraca 0 gdy 2 stringi sa identyczne
+
+encapsulation = contain related pieces of information
+
+C nie jest Object oriented. struct w c nie moze trzymac funkcji, obiekt moze.
+
+selection sort O(n**2) i omega(n**2) 
+bubble sort O(n**2) i omega(n)
+merge sort O(nlog(n)) i omega(nlog(n))
