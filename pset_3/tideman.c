@@ -208,11 +208,24 @@ void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++){
         pair p = pairs[i];
-        // check cycle problem
-        // for (int j = 0; j < pair_count; j++){
-        //     if ()
-        // }
-        locked[p.winner][p.loser] = true;
+        bool forbidden_to_lock = false;
+        // for first two it's always safe
+        if (i == 0 || i == 1){
+            locked[p.winner][p.loser] = true;
+        }
+        else {
+            // lop over loser locks
+            for (int j = 0; j < candidate_count; j++){
+                if (locked[j][p.winner] == true && locked[p.loser][j] == true){
+                    // we would have gotten a cycle!
+                    forbidden_to_lock = true;
+                    break;
+                }
+            }
+            if (!forbidden_to_lock){
+                locked[p.winner][p.loser] = true;
+            }
+        }
     }
 }
 
