@@ -117,6 +117,10 @@ int main(int argc, string argv[])
         printf("%i. winner=%i loser=%i\n", i, pairs[i].winner, pairs[i].loser); 
     }
     sort_pairs();
+    // pairs (sorted)
+    for(int i = 0; i < pair_count; i++){
+        printf("%i. winner=%i loser=%i\n", i, pairs[i].winner, pairs[i].loser); 
+    }
     lock_pairs();
     print_winner();
     return 0;
@@ -166,9 +170,29 @@ void add_pairs(void)
 }
 
 // Sort pairs in decreasing order by strength of victory
+// TODO merge sort
 void sort_pairs(void)
 {
-    // TODO
+    int swap_counter = 0;
+    int iteration = 0;
+    do {
+        swap_counter = 0;
+        for (int i = 0; i < pair_count - 1 - iteration; i++){
+            pair p1 = pairs[i];
+            pair p2 = pairs[i + 1];
+            int difference = preferences[p1.winner][p1.loser] - preferences[p2.winner][p2.loser];
+            if (difference < 0){
+                // swap
+                pair temp;
+                temp.winner = p1.winner;
+                temp.loser = p1.loser;
+                pairs[i] = p2;
+                pairs[i + 1] = temp;
+                swap_counter++;
+            }
+        }
+        iteration++;
+    } while (swap_counter >  0);
     return;
 }
 
