@@ -122,6 +122,13 @@ int main(int argc, string argv[])
         printf("%i. winner=%i loser=%i\n", i, pairs[i].winner, pairs[i].loser); 
     }
     lock_pairs();
+    // print locked matrix (temporary)
+    for(int i = 0; i < candidate_count; i++){
+        for(int j = 0; j < candidate_count; j++){
+            printf("%i ", locked[i][j]);
+        }
+        printf("\n");
+    }
     print_winner();
     return 0;
 }
@@ -199,13 +206,30 @@ void sort_pairs(void)
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // TODO
-    return;
+    for (int i = 0; i < pair_count; i++){
+        pair p = pairs[i];
+        // check cycle problem
+        // for (int j = 0; j < pair_count; j++){
+        //     if ()
+        // }
+        locked[p.winner][p.loser] = true;
+    }
 }
 
 // Print the winner of the election
 void print_winner(void)
 {
-    // TODO
+    int locks_counter;
+    for (int i = 0; i < pair_count; i++){
+        locks_counter = 0;
+        for (int j = 0; j < pair_count; j++){
+            if (locked[j][i] == true){
+                locks_counter++;
+            }
+        }
+        if (locks_counter == 0){
+            printf("%s\n", candidates[i]);
+        }
+    }
     return;
 }
