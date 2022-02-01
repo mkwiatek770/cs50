@@ -204,6 +204,8 @@ void sort_pairs(void)
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
+// "skips middle pair cycle": https://i.imgur.com/mdsDidq.png
+// "skips final pair cycle" https://i.imgur.com/OJosjRe.png
 void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++){
@@ -214,7 +216,7 @@ void lock_pairs(void)
             locked[p.winner][p.loser] = true;
         }
         else {
-            // lop over loser locks
+            // lop over rows
             for (int j = 0; j < candidate_count; j++){
                 if (locked[j][p.winner] == true && locked[p.loser][j] == true){
                     // we would have gotten a cycle!
@@ -232,6 +234,11 @@ void lock_pairs(void)
 // Print the winner of the election
 void print_winner(void)
 {
+    // inny pomysl
+    // petla to posortowanych parach
+        // wez wygreanego
+        // petla po 
+
     int locks_counter;
     for (int i = 0; i < pair_count; i++){
         locks_counter = 0;
