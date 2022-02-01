@@ -206,6 +206,7 @@ void sort_pairs(void)
 // Lock pairs into the candidate graph in order, without creating cycles
 // "skips middle pair cycle": https://i.imgur.com/mdsDidq.png
 // "skips final pair cycle" https://i.imgur.com/OJosjRe.png
+// rekurencja moze tu byc rozwiazaniem ....
 void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++){
