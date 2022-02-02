@@ -103,32 +103,9 @@ int main(int argc, string argv[])
         printf("\n");
     }
 
-    // print matrix (temporary)
-    // for(int i = 0; i < candidate_count; i++){
-    //     for(int j = 0; j < candidate_count; j++){
-    //         printf("%i ", preferences[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
     add_pairs();
-    // pairs (unsorted)
-    // for(int i = 0; i < pair_count; i++){
-    //     printf("%i. winner=%i loser=%i\n", i, pairs[i].winner, pairs[i].loser); 
-    // }
     sort_pairs();
-    // pairs (sorted)
-    // for(int i = 0; i < pair_count; i++){
-    //     printf("%i. winner=%i loser=%i\n", i, pairs[i].winner, pairs[i].loser); 
-    // }
     lock_pairs();
-    // print locked matrix (temporary)
-    // for(int i = 0; i < candidate_count; i++){
-    //     for(int j = 0; j < candidate_count; j++){
-    //         printf("%i ", locked[i][j]);
-    //     }
-    //     printf("\n");
-    // }
     print_winner();
     return 0;
 }
@@ -241,46 +218,9 @@ void lock_pairs(void)
 }
 
 
-// bool is_root(int )
-
 // Print the winner of the election
 void print_winner(void)
 {
-    // idea nr. 1
-    // int locks_counter;
-    // for (int i = 0; i < pair_count; i++){
-    //     locks_counter = 0;
-    //     for (int j = 0; j < candidate_count; j++){
-    //         if (locked[j][pairs[i].winner] == true){
-    //             locks_counter++;
-    //         }
-    //     }
-    //     if (locks_counter == 0){
-    //         printf("%s\n", candidates[i]);
-    //         break;
-    //     }
-    // }
-    // return;
-
-    // idea nr. 2
-    // int potential_winner;
-    // bool winner;
-    // for (int i = 0; i < pair_count; i ++){
-    //     potential_winner = pairs[i].winner;
-    //     winner = true;
-    //     for (int j = 0; j < candidate_count; j++){
-    //         if (locked[j][potential_winner] == true){
-    //             winner = false;
-    //             break;
-    //         }
-    //     }
-    //     if (winner == true){
-    //         printf("%s\n", candidates[potential_winner]);
-    //     }
-    // }
-    // return;
-
-    // idea nr. 3
     int cand_votes[MAX];
     int max_votes = 0;
     for (int i = 0; i < candidate_count; i++){
