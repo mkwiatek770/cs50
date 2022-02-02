@@ -203,34 +203,43 @@ void sort_pairs(void)
     return;
 }
 
-// Lock pairs into the candidate graph in order, without creating cycles
+
 // "skips middle pair cycle": https://i.imgur.com/mdsDidq.png
 // "skips final pair cycle" https://i.imgur.com/OJosjRe.png
-// rekurencja moze tu byc rozwiazaniem ....
+bool cycle_checker(int target, int other_node){
+    // out-of recurrence check
+    if (locked[other_node][target] == true){
+        return true;
+    }
+    // loser's lock-ins
+    for (int i = 0; i < candidate_count; i++){
+        if (locked[other_node][i] == true){
+            if (cycle_checker(target, i) == true){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+// Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++){
         pair p = pairs[i];
-        bool forbidden_to_lock = false;
         // for first two it's always safe
         if (i == 0 || i == 1){
             locked[p.winner][p.loser] = true;
         }
         else {
-            // lop over rows
-            for (int j = 0; j < candidate_count; j++){
-                if (locked[j][p.winner] == true && locked[p.loser][j] == true){
-                    // we would have gotten a cycle!
-                    forbidden_to_lock = true;
-                    break;
-                }
-            }
-            if (!forbidden_to_lock){
+            if (!cycle_checker(p.winner, p.loser)){
                 locked[p.winner][p.loser] = true;
             }
         }
     }
 }
+
 
 // Print the winner of the election
 void print_winner(void)
