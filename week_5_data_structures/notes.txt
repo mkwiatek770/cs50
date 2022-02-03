@@ -1,0 +1,5 @@
+
+int arr[3] - korzysta ze stack memory
+int *arr = malloc(3 * sizeof(int)) - korzsta z heap memory
+
+(*n).number = 1 -- to samo co n->number = 1 (synctactic sugar)
