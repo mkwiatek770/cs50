@@ -66,17 +66,24 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     }
 
     // change image by refering to copy image
-    for (int h = 1; h < height - 1; h++){
-        for (int w = 1; w < width - 1; w++){
-            BYTE blue_sum = 0;
-            BYTE green_sum = 0;
-            BYTE red_sum = 0;
-            int pixels_counter = 0; 
-            for (int i = -1; i <= 1; i++){
-                for (int j = -1; j <= 1; j++){
-                    blue_sum += image_copy[h - i][w - i].rgbtBlue;
-                    green_sum += image_copy[h - i][w - i].rgbtGreen;
-                    red_sum += image_copy[h - i][w - i].rgbtRed;
+    for (int h = 0; h < height; h++){
+        for (int w = 0; w < width; w++){
+            int blue_sum = 0;
+            int green_sum = 0;
+            int red_sum = 0;
+            int pixels_counter = 0;
+
+            int hi_up = h == height - 1 ? 0 : -1;
+            int hi_down = h == 0 ? 0 : 1;
+            int wi_right = w == width - 1 ? 0 : -1;
+            int wi_left = h == 0 ? 0 : 1;
+
+
+            for (int hi = hi_up; hi <= hi_down; hi++){
+                for (int wi = wi_right; wi <= wi_left; wi++){
+                    blue_sum += image_copy[h - hi][w - hi].rgbtBlue;
+                    green_sum += image_copy[h - hi][w - hi].rgbtGreen;
+                    red_sum += image_copy[h - hi][w - hi].rgbtRed;
                     pixels_counter++;
                 }
             }
