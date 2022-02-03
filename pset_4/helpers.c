@@ -32,6 +32,24 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+    // create copy of image
+    RGBTRIPLE(*image_copy)[width] = calloc(height, width * sizeof(RGBTRIPLE));
+    for (int h = 0; h < height; h++){
+        for (int w = 0; w < width; w++){
+            image_copy[h][w] = image[h][w];
+        }
+    }
+
+    // change image by refering to copy image
+    for (int h = 0; h < height; h++){
+        for (int w = 0; w < width; w++){
+            image[h][w] = image_copy[h][width - w - 1];
+        }
+    }
+
+    // free image_copy
+    free(image_copy);
+
     return;
 }
 
