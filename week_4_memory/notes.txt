@@ -1,0 +1,27 @@
+
+
+rgb
+notacja szestnastkowa (hexadecymalna)
+pamiec komputera czesto jest reprezentowana w notacji szesnastkowej np. 0xF19c076b (8 bajtow)
+
+pointer - zmienna ktora trzyma adres pod ktorym wartosc jest zapisana
+
+stack overflow, heap overflow i buffer overflow
+
+dereference operator
+
+string s = char *s (typedef char *string)
+
+operator "=" robi kopie
+
+pointer arithmetic (traktowanie adresow jako inty)
+
+array - address (pointer) to first element (i kazdy kolejny bedzie w adresie o n bajtow wiekszym, gdzie n to rozmiar typu (np 4 dla intigera)
+
+dynamic memory allocation - malloc i free
+
+program valgrind
+
+garbage values
+
+stack overflow = conflict between heap and stach memories
