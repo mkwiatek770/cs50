@@ -3,6 +3,8 @@
 #include "math.h"
 
 
+// void copy_image( *source, int *dest int height, int width)
+
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -17,7 +19,7 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
     // change image by refering to copy image
     for (int h = 0; h < height; h++){
         for (int w = 0; w < width; w++){
-            BYTE average = (image[h][w].rgbtBlue + image[h][w].rgbtGreen + image[h][w].rgbtRed) / 3;
+            BYTE average = ceil((image[h][w].rgbtBlue + image[h][w].rgbtGreen + image[h][w].rgbtRed) / 3.0);
             image[h][w].rgbtBlue = average;
             image[h][w].rgbtGreen = average;
             image[h][w].rgbtRed = average;
