@@ -106,6 +106,12 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
+
+int min(int num1, int num2){
+    return (num1 > num2 ) ? num2 : num1;
+}
+
+
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -153,9 +159,9 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     red_sum_gy += image_copy[h + hi][w + wi].rgbtRed * GY_KERNEL[kernel_h][kernel_w];
                 }
             }
-            image[h][w].rgbtBlue = round(sqrt(blue_sum_gx*blue_sum_gx + blue_sum_gy*blue_sum_gy));
-            image[h][w].rgbtGreen = round(sqrt(green_sum_gx*green_sum_gx + green_sum_gy*green_sum_gy));
-            image[h][w].rgbtRed = round(sqrt(red_sum_gx*red_sum_gx + red_sum_gy*red_sum_gy));
+            image[h][w].rgbtBlue = min(0xFF, round(sqrt(blue_sum_gx*blue_sum_gx + blue_sum_gy*blue_sum_gy)));
+            image[h][w].rgbtGreen = min(0xFF, round(sqrt(green_sum_gx*green_sum_gx + green_sum_gy*green_sum_gy)));
+            image[h][w].rgbtRed = min(0xFF, round(sqrt(red_sum_gx*red_sum_gx + red_sum_gy*red_sum_gy)));
         }
     }
 
