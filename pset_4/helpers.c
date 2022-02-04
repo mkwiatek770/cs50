@@ -1,5 +1,6 @@
 #include "helpers.h"
 #include "stdlib.h"
+#include "math.h"
 
 
 // Convert image to grayscale
@@ -87,9 +88,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
             for (int hi = hi_up; hi <= hi_down; hi++){
                 for (int wi = wi_right; wi <= wi_left; wi++){
-                    blue_sum += image_copy[h - hi][w - hi].rgbtBlue;
-                    green_sum += image_copy[h - hi][w - hi].rgbtGreen;
-                    red_sum += image_copy[h - hi][w - hi].rgbtRed;
+                    blue_sum += image_copy[h - hi][w - wi].rgbtBlue;
+                    green_sum += image_copy[h - hi][w - wi].rgbtGreen;
+                    red_sum += image_copy[h - hi][w - wi].rgbtRed;
                     pixels_counter++;
                 }
             }
@@ -108,5 +109,58 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
+    
+    // create copy of image
+    RGBTRIPLE(*image_copy)[width] = calloc(height, width * sizeof(RGBTRIPLE));
+    for (int h = 0; h < height; h++){
+        for (int w = 0; w < width; w++){
+            image_copy[h][w] = image[h][w];
+        }
+    }
+
+    int GX_KERNEL[3][3] = {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+    int GY_KERNEL[3][3] = {
+        {-1, -2, -1},
+        {0, 0, 0},
+        {1, 2, 1}
+    };
+
+
+    // change image by refering to copy image
+    int blue_sum_gx, blue_sum_gy, green_sum_gx, green_sum_gy, red_sum_gx, red_sum_gy;
+    int hi_from, hi_to, wi_from, wi_to;
+
+    for (int h = 0; h < height; h++){
+        for (int w = 0; w < width; w++){
+            blue_sum_gx =0, blue_sum_gy = 0, green_sum_gx = 0, green_sum_gy = 0, red_sum_gx = 0, red_sum_gy = 0;
+
+            hi_from = h == 0 ? 0 : -1;
+            hi_to = h == height - 1 ? 0 : 1;
+            wi_from = w == 0 ? 0 : -1;
+            wi_to = w == width - 1 ? 0 : 1;
+
+            for (int hi = hi_from, kernel_h = hi_from + 1; hi <= hi_to; hi++, kernel_h++){
+                for (int wi = wi_from, kernel_w = wi_from + 1; wi <= wi_to; wi++, kernel_w++){
+                    blue_sum_gx += image_copy[h + hi][w + wi].rgbtBlue * GX_KERNEL[kernel_h][kernel_w];
+                    green_sum_gx += image_copy[h + hi][w + wi].rgbtGreen * GX_KERNEL[kernel_h][kernel_w];
+                    red_sum_gx += image_copy[h + hi][w + wi].rgbtRed * GX_KERNEL[kernel_h][kernel_w];
+                    blue_sum_gy += image_copy[h + hi][w + wi].rgbtBlue * GY_KERNEL[kernel_h][kernel_w];
+                    green_sum_gy += image_copy[h + hi][w + wi].rgbtGreen * GY_KERNEL[kernel_h][kernel_w];
+                    red_sum_gy += image_copy[h + hi][w + wi].rgbtRed * GY_KERNEL[kernel_h][kernel_w];
+                }
+            }
+            image[h][w].rgbtBlue = round(sqrt(blue_sum_gx*blue_sum_gx + blue_sum_gy*blue_sum_gy));
+            image[h][w].rgbtGreen = round(sqrt(green_sum_gx*green_sum_gx + green_sum_gy*green_sum_gy));
+            image[h][w].rgbtRed = round(sqrt(red_sum_gx*red_sum_gx + red_sum_gy*red_sum_gy));
+        }
+    }
+
+    // free image_copy
+    free(image_copy);
+
     return;
 }
