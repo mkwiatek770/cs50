@@ -3,3 +3,17 @@ int arr[3] - korzysta ze stack memory
 int *arr = malloc(3 * sizeof(int)) - korzsta z heap memory
 
 (*n).number = 1 -- to samo co n->number = 1 (synctactic sugar)
+
+binary search tree O(logn) dla search i insert
+
+AVL-tree red-black tree
+
+unbalanced binary tree
+
+teoretycznie zlozonosc hash table to O(n), ale w praktyce jest o wiele szybsza
+
+Trie - wielopoziomowa (multi tier) hash table; lookup - O(1), ale zajmuja duuuzo pamieci
+
+abstract data structures
+- FIFO: QUEUE
+- LIFO: STACK
