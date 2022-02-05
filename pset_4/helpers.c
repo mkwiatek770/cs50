@@ -8,7 +8,6 @@
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
 
-    // change image by refering to copy image
     for (int h = 0; h < height; h++){
         for (int w = 0; w < width; w++){
             BYTE average = round((image[h][w].rgbtBlue + image[h][w].rgbtGreen + image[h][w].rgbtRed) / 3.0);
@@ -45,7 +44,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
-// Blur image
+// Blur image (box blur)
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
 
@@ -76,9 +75,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     pixels_counter++;
                 }
             }
-            image[h][w].rgbtBlue = blue_sum / 9;
-            image[h][w].rgbtGreen = blue_sum / 9;
-            image[h][w].rgbtRed = blue_sum / 9;
+            image[h][w].rgbtBlue = round(blue_sum / (float)pixels_counter);
+            image[h][w].rgbtGreen = round(green_sum / (float)pixels_counter);
+            image[h][w].rgbtRed = round(red_sum / (float)pixels_counter);
         }
     }
 
