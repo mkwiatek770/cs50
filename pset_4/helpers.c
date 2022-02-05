@@ -3,31 +3,20 @@
 #include "math.h"
 
 
-// void copy_image( *source, int *dest int height, int width)
 
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
-    // create copy of image
-    RGBTRIPLE(*image_copy)[width] = calloc(height, width * sizeof(RGBTRIPLE));
-    for (int h = 0; h < height; h++){
-        for (int w = 0; w < width; w++){
-            image_copy[h][w] = image[h][w];
-        }
-    }
 
     // change image by refering to copy image
     for (int h = 0; h < height; h++){
         for (int w = 0; w < width; w++){
-            BYTE average = ceil((image[h][w].rgbtBlue + image[h][w].rgbtGreen + image[h][w].rgbtRed) / 3.0);
+            BYTE average = round((image[h][w].rgbtBlue + image[h][w].rgbtGreen + image[h][w].rgbtRed) / 3.0);
             image[h][w].rgbtBlue = average;
             image[h][w].rgbtGreen = average;
             image[h][w].rgbtRed = average;
         }
     }
-
-    // free image_copy
-    free(image_copy);
 
     return;
 }
@@ -87,9 +76,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     pixels_counter++;
                 }
             }
-            image[h][w].rgbtBlue = blue_sum / pixels_counter;
-            image[h][w].rgbtGreen = blue_sum / pixels_counter;
-            image[h][w].rgbtRed = blue_sum / pixels_counter;
+            image[h][w].rgbtBlue = blue_sum / 9;
+            image[h][w].rgbtGreen = blue_sum / 9;
+            image[h][w].rgbtRed = blue_sum / 9;
         }
     }
 
