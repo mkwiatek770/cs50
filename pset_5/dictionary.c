@@ -46,6 +46,7 @@ bool check(const char *word)
 }
 
 // Hashes word to a number
+// TODO https://www.youtube.com/watch?v=jtMwp0FqEcg
 unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
