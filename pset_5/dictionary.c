@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // TODO: Choose number of buckets in hash table
-const unsigned int N = 90 * 90 * 90;
+const unsigned int N = 90 * 90 * 90 * 90;
 
 // Hash table
 node *table[N];
@@ -53,7 +53,7 @@ unsigned int hash(const char *word)
 
     unsigned int value = 1;
     int i = 0;
-    while (word[i] != '\0' && i < 3){
+    while (word[i] != '\0' && i < 4){
         value *= toupper(word[i]);
         i++;
     }
