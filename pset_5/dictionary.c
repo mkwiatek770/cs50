@@ -2,6 +2,9 @@
 
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "dictionary.h"
 
@@ -14,7 +17,7 @@ typedef struct node
 node;
 
 // TODO: Choose number of buckets in hash table
-const unsigned int N = 1;
+const unsigned int N = 26;
 
 // Hash table
 node *table[N];
@@ -43,8 +46,39 @@ unsigned int hash(const char *word)
 // Loads dictionary into memory, returning true if successful, else false
 bool load(const char *dictionary)
 {
-    // TODO
-    return false;
+    // TODO: zwalnianie zaalokowanej pamieci, w przypadku, gdy malloc zwroci null.
+    char word[LENGTH + 1];
+    unsigned int hash_val;
+    FILE *file = fopen(dictionary, "r");
+    if (file == NULL){
+        return false;
+    }
+
+    while (fscanf(file, "%s", word) != EOF){
+        hash_val = hash(word);
+        printf("load word: %s with hash %i\n", word, hash_val);
+
+        node *n = malloc(sizeof(node));
+        strcpy(n->word, word);
+        n->next = NULL;
+        
+        if (table[hash_val] == NULL){
+            table[hash_val] = n;
+            printf("add first node to table[%i]\n", hash_val);
+        }
+        else {
+            int i = 0;
+            node *tmp = table[hash_val];
+            while (tmp->next != NULL){
+                tmp = tmp->next;
+                i++;
+            }
+            tmp->next = n;
+            printf("add %i node to table[%i]\n", i + 1, hash_val);
+        }
+    }
+    printf("all done\n");
+    return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
