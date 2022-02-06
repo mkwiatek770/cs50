@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // TODO: Choose number of buckets in hash table
-const unsigned int N = 90 * 90;
+const unsigned int N = 90 * 90 * 90;
 
 // Hash table
 node *table[N];
@@ -50,10 +50,15 @@ unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
     // hash func must be case insensitive
-    if (word[1] == '\0'){
-        return toupper(word[0]) - 'A';
+
+    unsigned int value = 1;
+    int i = 0;
+    while (word[i] != '\0' && i < 3){
+        value *= toupper(word[i]);
+        i++;
     }
-    return (toupper(word[1])) * (toupper(word[0]));
+    return value;
+    // return (toupper(word[1])) * (toupper(word[0]));
 }
 
 // Loads dictionary into memory, returning true if successful, else false
