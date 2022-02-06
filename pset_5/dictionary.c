@@ -77,7 +77,6 @@ bool load(const char *dictionary)
             printf("add %i node to table[%i]\n", i + 1, hash_val);
         }
     }
-    printf("all done\n");
     return true;
 }
 
@@ -91,6 +90,18 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    node *list;
+    node *tmp;
+    for (int i = 0; i < N; i++){
+        if (table[i] == NULL){
+            continue;
+        }
+        list = table[i];
+        while (list != NULL){
+            tmp = list->next;
+            free(list);
+            list = tmp;
+        }
+    }
+    return true;
 }
