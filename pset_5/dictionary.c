@@ -31,7 +31,6 @@ node *table[N];
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
-    // case insensitive checking (istnieje funkcja strcasecmp)
     int hash_val = hash(word);
     if (table[hash_val] == NULL){
         return false;
@@ -94,8 +93,19 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    unsigned int counter = 0;
+    node *n;
+    for (int i = 0; i < N; i++){
+        if (table[i] == NULL){
+            continue;
+        }
+        n = table[i];
+        while (n != NULL){
+            counter++;
+            n = n->next;
+        }
+    }
+    return counter;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
