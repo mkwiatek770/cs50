@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 #include "dictionary.h"
 
@@ -31,7 +32,17 @@ node *table[N];
 bool check(const char *word)
 {
     // case insensitive checking (istnieje funkcja strcasecmp)
-    // TODO
+    int hash_val = hash(word);
+    if (table[hash_val] == NULL){
+        return false;
+    }
+    node *n = table[hash_val];
+    while (n != NULL){
+        if (strcasecmp(n->word, word) == 0){
+            return true;
+        }
+        n = n->next;
+    }
     return false;
 }
 
@@ -74,7 +85,7 @@ bool load(const char *dictionary)
                 i++;
             }
             tmp->next = n;
-            printf("add %i node to table[%i]\n", i + 1, hash_val);
+            printf("add %i node (%s) to table[%i]\n", i + 1, word, hash_val);
         }
     }
     return true;
