@@ -1,0 +1,15 @@
+flat-file database (csv)
+
+lambda function
+
+sorted i key
+
+regex
+
+CRUD
+
+indexes
+- zamieniaja strukture jakiejs tabeli/czesto przeszukiwanej kolumny z liniowej na cos szybszego np hash table
+- oczywiscie kosztem jest dodatkowa pamiec
+
+race conditions (commits, transactions, ...)
