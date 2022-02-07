@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+#include <math.h>
 
 #include "dictionary.h"
 
@@ -18,7 +19,7 @@ typedef struct node
 node;
 
 // TODO: Choose number of buckets in hash table
-const unsigned int N = 90 * 90 * 90 * 90;
+const unsigned int N = 2000000;
 
 // Hash table
 node *table[N];
@@ -46,20 +47,17 @@ bool check(const char *word)
 }
 
 // Hashes word to a number
-// TODO https://www.youtube.com/watch?v=jtMwp0FqEcg
+// inspired by https://www.youtube.com/watch?v=jtMwp0FqEcg
 unsigned int hash(const char *word)
 {
-    // TODO: Improve this hash function
-    // hash func must be case insensitive
-
+    const int g = 31;
     unsigned int value = 1;
     int i = 0;
     while (word[i] != '\0' && i < 4){
-        value *= toupper(word[i]);
+        value += toupper(word[i]) * pow(g, i);
         i++;
     }
-    return value;
-    // return (toupper(word[1])) * (toupper(word[0]));
+    return value % N;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
