@@ -73,7 +73,6 @@ bool load(const char *dictionary)
 
     while (fscanf(file, "%s", word) != EOF){
         hash_val = hash(word);
-        printf("load word: %s with hash %i\n", word, hash_val);
 
         node *n = malloc(sizeof(node));
         strcpy(n->word, word);
@@ -81,7 +80,6 @@ bool load(const char *dictionary)
         
         if (table[hash_val] == NULL){
             table[hash_val] = n;
-            printf("add first node to table[%i]\n", hash_val);
         }
         else {
             int i = 0;
@@ -91,7 +89,6 @@ bool load(const char *dictionary)
                 i++;
             }
             tmp->next = n;
-            printf("add %i node (%s) to table[%i]\n", i + 1, word, hash_val);
         }
     }
     return true;
