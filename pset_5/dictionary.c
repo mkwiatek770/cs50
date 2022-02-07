@@ -75,6 +75,11 @@ bool load(const char *dictionary)
         hash_val = hash(word);
 
         node *n = malloc(sizeof(node));
+        if (n == NULL){
+            free(n);
+            unload();
+            return false;
+        }
         strcpy(n->word, word);
         n->next = NULL;
         
@@ -91,6 +96,7 @@ bool load(const char *dictionary)
             tmp->next = n;
         }
     }
+    fclose(file);
     return true;
 }
 
