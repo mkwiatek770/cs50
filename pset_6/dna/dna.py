@@ -1,10 +1,10 @@
 import csv
 import sys
+import re
 import argparse
-from collections import defaultdict
 
 
-STR_COUNTER = defaultdict(int)
+STR_COUNTER = dict()
 
 
 def main():
@@ -12,28 +12,26 @@ def main():
     db_path, sequence_path = parse()
 
     with open(db_path) as db_file, open(sequence_path) as sequence_file:
-        db_reader = csv.reader(db_file)
-        strs = set(next(db_reader)[1:])
+        db_reader = csv.DictReader(db_file)
+        strs = set(db_reader.fieldnames) - {'name'}
+        str_patterns = {str_: re.compile(rf'({str_})+') for str_ in strs}
 
         dna_sequence = sequence_file.read()
-        print(len(dna_sequence))
-        # to nie bd dzialac bo str moze miec dluhosc np 5
-        for i in range(0, len(dna_sequence), 4):
-            nucleotide = dna_sequence[i:i+4]
-            if nucleotide in strs:
-                STR_COUNTER[nucleotide] += 1
 
-        print(strs)
-        print(STR_COUNTER)
+        for str_, pattern in str_patterns.items():
+            longest = 0
+            for match in pattern.finditer(dna_sequence):
+                span = match.span()
+                match_length = (span[1] - span[0]) // len(str_)
+                longest = match_length if match_length > longest else longest
+            STR_COUNTER[str_] = longest
+
         for row in db_reader:
-            print(row[0])
-    # TODO: Check for command-line usage
-
-    # TODO: Find longest match of each STR in DNA sequence
-
-    # TODO: Check database for matching profiles
-
-    return
+            if all(int(row[str_]) == STR_COUNTER[str_] for str_ in strs):
+                print(row['name'])
+                sys.exit(0)
+    print('No match')
+    sys.exit(0)
 
 
 def parse():
