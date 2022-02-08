@@ -6,7 +6,7 @@ def get_grade(L, S):
 
 
 def word_length(word):
-    return len(re.sub("[!?'\.]", '', word))
+    return len(re.sub("[!?'\.,]", '', word))
     
 
 def get_average_n_of_letters_per_100_words(text):
@@ -24,4 +24,10 @@ if __name__ == '__main__':
     text = input('Text: ')
     l = get_average_n_of_letters_per_100_words(text)
     s = get_average_n_of_words_per_sentence(text)
-    print("Grade ", get_grade(l, s))
+    grade = get_grade(l, s)
+    if grade >= 16:
+        print("Grade 16+")
+    elif grade < 1:
+        print("Before Grade 1")
+    else:
+        print("Grade ", grade)
