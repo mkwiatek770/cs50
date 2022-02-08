@@ -1,7 +1,10 @@
-from asyncore import read
 import csv
 import sys
 import argparse
+from collections import defaultdict
+
+
+STR_COUNTER = defaultdict(int)
 
 
 def main():
@@ -9,9 +12,21 @@ def main():
     db_path, sequence_path = parse()
 
     with open(db_path) as db_file, open(sequence_path) as sequence_file:
-        db_reader = csv.DictReader(db_file)
+        db_reader = csv.reader(db_file)
+        strs = set(next(db_reader)[1:])
+
+        dna_sequence = sequence_file.read()
+        print(len(dna_sequence))
+        # to nie bd dzialac bo str moze miec dluhosc np 5
+        for i in range(0, len(dna_sequence), 4):
+            nucleotide = dna_sequence[i:i+4]
+            if nucleotide in strs:
+                STR_COUNTER[nucleotide] += 1
+
+        print(strs)
+        print(STR_COUNTER)
         for row in db_reader:
-            print(row['name'])
+            print(row[0])
     # TODO: Check for command-line usage
 
     # TODO: Find longest match of each STR in DNA sequence
