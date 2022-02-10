@@ -1,7 +1,7 @@
 #! /bin/bash
 
 declare -a expected;
-expected=(0 9952 1 69705 1 11 1 7046 4 18730 2236 5 6 185);
+expected=(0 9952 1 69705 1 11 1 7046 4 18672 2232 5 6 185);
 
 
 for i in {1..13}; do
