@@ -182,3 +182,35 @@ WHERE
     AND phone_number IN suspect_numbers;
 -- Ernest
 
+
+-- 2. get destination name
+SELECT city FROM airports
+WHERE id = (
+    SELECT destination_airport_id FROM flights
+    WHERE origin_airport_id = (SELECT id FROM airports WHERE city = "Fiftyville")
+    AND year = 2020 AND month = 7 AND day = 29
+    ORDER BY hour, minute
+    LIMIT 1
+);
+-- London
+
+
+CREATE TABLE phone_calls (
+    id INTEGER,
+    caller TEXT,
+    receiver TEXT,
+    year INTEGER,
+    month INTEGER,
+    day INTEGER,
+    duration INTEGER,
+    PRIMARY KEY(id)
+);
+
+-- 3. get accomplice
+SELECT name FROM people
+WHERE phone_number = (
+    SELECT receiver FROM phone_calls
+    WHERE caller = (SELECT phone_number FROM people WHERE name = 'Ernest')
+          AND year = 2020 AND month = 7 AND day = 28 AND duration < 60
+);
+-- Berthold
