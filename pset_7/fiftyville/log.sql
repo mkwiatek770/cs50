@@ -133,44 +133,52 @@ WHERE atm_location = 'Fifer Street' AND year = 2020 AND month = 7 AND day = 28 A
 -- 26013199|35
 
 
-CREATE TABLE flights (
-    id INTEGER,
-    origin_airport_id INTEGER,
-    destination_airport_id INTEGER,
-    year INTEGER,
-    month INTEGER,
-    day INTEGER,
-    hour INTEGER,
-    minute INTEGER,
-    PRIMARY KEY(id),
-    FOREIGN KEY(origin_airport_id) REFERENCES airports(id),
-    FOREIGN KEY(destination_airport_id) REFERENCES airports(id)
-);
-
 -- get earliest flight FROM Fiftyville on 29th July 2020
-SELECT * FROM flights
-WHERE origin_airport_id = (SELECT id FROM airports WHERE city = "Fiftyville")
-      AND year = 2020 AND month = 7 AND day = 29
-ORDER BY hour, minute
-LIMIT 1;
+WITH suspect_passports AS (
+    SELECT passport_number FROM passengers
+    WHERE flight_id = (
+            SELECT id FROM flights
+            WHERE origin_airport_id = (SELECT id FROM airports WHERE city = "Fiftyville")
+            AND year = 2020 AND month = 7 AND day = 29
+            ORDER BY hour, minute
+            LIMIT 1
+    )
+)
+
 -- 36|8|4|2020|7|29|8|20
 
 
 
--- combine those two to find a guilty person
-WITH camera_plates AS (
+-- 1. combine those two to find a guilty person
+WITH suspected_plates AS (
     SELECT license_plate FROM courthouse_security_logs
-    WHERE year = 2020 AND month = 7 AND day = 28 AND hour = 10 AND minute > 15 AND minute < 30 AND activity = 'exit'
+    WHERE year = 2020 AND month = 7 AND day = 28 AND hour = 10 AND minute >= 15 AND minute <= 25 AND activity = 'exit'
 ),
-suspect_account_ids AS (
+suspected_account_ids AS (
     SELECT person_id FROM bank_accounts
     WHERE account_number IN (SELECT account_number FROM atm_transactions
                              WHERE atm_location = 'Fifer Street' AND year = 2020
                              AND month = 7 AND day = 28 AND transaction_type = 'withdraw')
+),
+suspected_passports AS (
+    SELECT passport_number FROM passengers
+    WHERE flight_id = (
+            SELECT id FROM flights
+            WHERE origin_airport_id = (SELECT id FROM airports WHERE city = "Fiftyville")
+            AND year = 2020 AND month = 7 AND day = 29
+            ORDER BY hour, minute
+            LIMIT 1
+    )
+),
+suspect_numbers AS (
+    SELECT caller FROM phone_calls
+    WHERE year = 2020 AND month = 7 AND day = 28 AND duration < 60
 )
 SELECT name FROM people
-WHERE license_plate IN camera_plates AND id IN suspect_account_ids;
--- Elizabeth
--- Danielle
--- Russell
+WHERE 
+    license_plate IN suspected_plates
+    AND id IN suspected_account_ids
+    AND passport_number IN suspected_passports
+    AND phone_number IN suspect_numbers;
 -- Ernest
+
