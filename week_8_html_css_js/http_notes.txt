@@ -1,0 +1,18 @@
+- przykład użycia curla:
+ curl -I http://harvard.edu/
+HTTP/1.1 301 Moved Permanently
+Content-Type: text/html
+Location: https://harvard.edu/
+Server: nginx
+
+iPv4 - 32 bitów (ponad 4 miliardy adresów)
+DHCP - dynamic host configuration protocol
+
+programy: traceroute, nslookup, curl
+
+TCP protocool i porty różnych aplikacji
+	- 22SSH, 53DNS, 80HTTP, 443HTTPS, 587SMTP
+
+tree structure of html tags
+
+html entity
