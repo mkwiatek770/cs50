@@ -5,6 +5,8 @@ Content-Type: text/html
 Location: https://harvard.edu/
 Server: nginx
 
+content types = mime types
+
 iPv4 - 32 bitów (ponad 4 miliardy adresów)
 DHCP - dynamic host configuration protocol
 
@@ -16,3 +18,9 @@ TCP protocool i porty różnych aplikacji
 tree structure of html tags
 
 html entity
+
+validator.w3.org -> walidacja napisanego html
+
+dlatego css to kaskadowe arkusze stylów, ponieważ style kaskadowo są dziedziczone przez wszystkich potomków node'u
+
+developer tools
