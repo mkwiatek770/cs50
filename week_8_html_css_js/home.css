@@ -1,0 +1,16 @@
+body{
+    text-align: center;
+}
+
+header {
+    font-size: large;
+}
+
+p{
+    color: red;
+}
+
+/* pseudo-class */
+p:first-child{
+    color: blue;
+}
