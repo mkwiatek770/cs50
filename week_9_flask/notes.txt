@@ -1,0 +1,4 @@
+1. routes
+2. you should never rely on client side safety checks
+3. Jinja templates
+4. MVC (Model viev controler)
