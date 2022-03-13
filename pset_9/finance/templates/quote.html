@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote lookup
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Stock" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Lookup</button>
+    </form>
+
+    {% if result %}
+        <div class="result">
+            <p>Name: {{ result.name }}</p>
+            <p>Name: {{ result.price }}</p>
+            <p>Name: {{ result.symbol }}</p>    
+        </div>
+    {% endif %}
+{% endblock %}
