@@ -1,5 +1,4 @@
 import functools
-from tabnanny import check
 
 from flask import Blueprint
 from flask import flash
