@@ -1,14 +1,15 @@
 import pytest
+from flask import url_for
 from flaskr.db import get_db
 
 
 def test_index(client, auth):
-    response = client.get('/')
+    response = client.get(url_for('index'))
     assert b'Log In' in response.data
     assert b'Register' in response.data
 
     auth.login()
-    response = client.get('/')
+    response = client.get(url_for('index'))
     assert b'Log Out' in response.data
     assert b'test title' in response.data
     assert b'by test on 2018-01-01' in response.data
@@ -17,13 +18,13 @@ def test_index(client, auth):
 
 
 @pytest.mark.parametrize('path', (
-    '/create',
-    '/1/update',
-    '/1/delete',
+    url_for('blog.create'),
+    url_for('blog.update', id=1),
+    url_for('blog.delete', id=1),
 ))
 def test_login_required(client, path):
     response = client.post(path)
-    assert response.headers['Location'] == '/auth/login'
+    assert response.headers['Location'] == url_for('auth.login')
 
 
 def test_author_required(app, client, auth):
@@ -35,8 +36,8 @@ def test_author_required(app, client, auth):
 
     auth.login()
     # current user can't modify other user's post
-    assert client.post('/1/update').status_code == 403
-    assert client.post('/1/delete').status_code == 403
+    assert client.post(url_for('update', id=1)).status_code == 403
+    assert client.post(url_for('delete', id=1)).status_code == 403
     # current user doesn't see edit link
     assert b'href="/1/update"' not in client.get('/').data
 
@@ -85,7 +86,7 @@ def test_create_update_validate(client, auth, path):
 def test_delete(client, auth, app):
     auth.login()
     response = client.post('/1/delete')
-    assert response.headers["Location"] == "/"
+    assert response.headers["Location"] == "http://localhost/"
 
     with app.app_context():
         db = get_db()
